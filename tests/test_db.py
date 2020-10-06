@@ -6,7 +6,7 @@ from db import TaskDatabase
 class DatabaseTestCase(TestCase):
     def setUp(self):
         self.db = TaskDatabase('test.sqlite')
-        self.db.create_database(recreate=True)
+        self.db.create_database()
 
     def tearDown(self):
         self.db.delete_database()

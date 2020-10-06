@@ -1,2 +1,5 @@
 .idea
-test.db
+tasks.sqlite
+
+__pycache__/
+*.py[cod]

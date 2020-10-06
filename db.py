@@ -8,19 +8,27 @@ class TaskDatabase:
         self.connection = None
 
     def get_connection(self):
+        """ Return a connection to the database, creating one if it doesn't exist """
         if self.connection is None:
             self.connection = sqlite3.connect(self.filename, check_same_thread=False)
 
         return self.connection
 
     def close_connection(self):
+        """ Close the connection to the database """
         if self.connection:
             self.connection.close()
+        self.connection = None
 
     def get_cursor(self):
+        """ Return a database cursor"""
         return self.get_connection().cursor()
 
     def execute(self, cursor, sql, parameters=None):
+        """ Execute a SQL statement
+
+        If the cursor is None, one will be automatically created
+        """
         if cursor is None:
             cursor = self.connection.cursor()
 
@@ -32,11 +40,9 @@ class TaskDatabase:
         cursor.execute(sql)
         self.get_connection().commit()
 
-    def create_database(self, recreate=False):
+    def create_database(self):
+        """ Create the tasks database """
         cursor = self.get_cursor()
-
-        if recreate:
-            self.execute(cursor, "DROP TABLE IF EXISTS tasks;")
 
         sql = """
             CREATE TABLE IF NOT EXISTS tasks (
@@ -48,17 +54,15 @@ class TaskDatabase:
             );"""
         self.execute(cursor, sql)
 
-        sql = "SELECT count(*) from tasks;"
-        self.execute(cursor, sql)
-        print(cursor.fetchone())
-
     def delete_database(self):
+        """ Delete the tasks database file """
         self.close_connection()
 
         os.unlink(self.filename)
         self.connection = None
 
     def add_task(self, content):
+        """ Add a task """
         # WARNING: This is bad and can lead to SQL Injection attacks!
         sql = f"""
           INSERT INTO tasks (created_date, content) 
@@ -70,6 +74,7 @@ class TaskDatabase:
         return cursor.lastrowid
 
     def rename_task(self, task_id, content):
+        """ Rename a task """
         sql = "UPDATE tasks SET content = ? WHERE id = ?;"
 
         return self.execute(None, sql, (content, task_id))
@@ -83,11 +88,13 @@ class TaskDatabase:
         return self.execute(None, sql, (task_id, ))
 
     def delete_task(self, task_id):
+        """ Delete a task """
         sql = "DELETE FROM tasks WHERE id = ?;"
 
         return self.execute(None, sql, (task_id, ))
 
     def get_task(self, task_id):
+        """ Retrieve a single task by id from the database """
         columns = ('id', 'created_date', 'content', 'done', 'completed_date')
         sql = f"SELECT {', '.join(columns)} FROM tasks WHERE id = ?;"
 
@@ -96,6 +103,7 @@ class TaskDatabase:
         return self.make_result(columns, cursor.fetchall())[0]
 
     def get_tasks(self):
+        """ Retrieve all tasks from the database """
         columns = ('id', 'created_date', 'content', 'done', 'completed_date')
         sql = f"SELECT {', '.join(columns)} FROM tasks ORDER BY id;"
 
@@ -104,6 +112,7 @@ class TaskDatabase:
         return self.make_result(columns, cursor.fetchall())
 
     def make_result(self, columns, rows):
+        """ Helper function to convert lists of (list) results into a list of dicts """
         records = []
         for row in rows:
             records.append(dict(zip(columns, row)))
