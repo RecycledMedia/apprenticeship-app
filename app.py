@@ -1,33 +1,24 @@
+import os
+
 from flask import Flask, request
 from flask import render_template
 from flask import redirect
-from flask_sqlalchemy import SQLAlchemy
+
+from db import TaskDatabase
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-db = SQLAlchemy(app)
+
+DATA_DIR = os.path.dirname(__file__)
+DB_FILE = os.path.join(DATA_DIR, 'tasks.sqlite')
 
 
-class Task(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.Text)
-    done = db.Column(db.Boolean, default=False)
-
-    def __init__(self, content):
-        self.content = content
-        self.done = False
-
-    def __repr__(self):
-        return '<Content %s>' % self.content
-
-
-db.create_all()
+db = TaskDatabase(DB_FILE)
+db.create_database()
 
 
 @app.route('/')
 def tasks_list():
-    tasks = Task.query.all()
+    tasks = db.get_tasks()
     return render_template('list.html', tasks=tasks)
 
 
@@ -37,35 +28,23 @@ def add_task():
     if not content:
         return 'Error'
 
-    task = Task(content)
-    db.session.add(task)
-    db.session.commit()
+    db.add_task(content)
     return redirect('/')
 
 
 @app.route('/delete/<int:task_id>')
 def delete_task(task_id):
-    task = Task.query.get(task_id)
+    task = db.get_task(task_id)
     if not task:
         return redirect('/')
 
-    db.session.delete(task)
-    db.session.commit()
+    db.delete_task(task_id)
     return redirect('/')
 
 
 @app.route('/done/<int:task_id>')
 def resolve_task(task_id):
-    task = Task.query.get(task_id)
-
-    if not task:
-        return redirect('/')
-    if task.done:
-        task.done = False
-    else:
-        task.done = True
-
-    db.session.commit()
+    db.set_task_done(task_id)
     return redirect('/')
 
 
