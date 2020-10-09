@@ -1,0 +1,35 @@
+main {
+    min-height: 600px;
+    padding: 70px 20px;
+}
+
+.tap-form {
+    margin-top: 25px;
+}
+
+#tap-list {
+    margin-top: 25px;
+}
+
+#tap-list li{
+    padding: 10px;
+}
+
+#tap-list li:nth-child(even) {
+    background: #f1f1f1;
+}
+
+#tap-list li .task-action {
+    float: right;
+    margin-left: 10px;
+}
+
+#tap-list .task-complete .task-content {
+    opacity: .5;
+    text-decoration: line-through;
+}
+
+.ti.ti-xs {
+    height: 16px;
+    min-width: 16px;
+}

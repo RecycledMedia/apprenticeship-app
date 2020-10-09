@@ -1,15 +1,280 @@
-<ul>
-{% for task in tasks %}
-    <li>
-        {% if task.done %} <strike> {% endif %}{{ task.content }} {% if task.done %} </strike>{% endif %}
-        <a href="/done/{{ task.id }}">X</a>
-        <a href="/delete/{{ task.id }}">Delete</a>
-    </li>
-{% endfor %}
-</ul>
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>TAP - Module 3</title>
+    <meta name="description" content="TAP - Module 3">
+
+    <link rel="stylesheet" type="text/css" href="https://assets.tradesy.com/build/css/global/index.critical.bc5dedc4e86b16e186ad.css">
+    <link rel="stylesheet" type="text/css" href="https://assets.tradesy.com/build/css/site/index.critical.4f6c273e13994514af8c.css">
+    <link rel="stylesheet" type="text/css" href="https://assets.tradesy.com/build/css/global/index.ad4c5b479fc13aa25fbf.css">
+    <link rel="stylesheet" href="../static/css/base.css">
+
+</head>
+
+<body>
+<header class="site-header js-site-header">
+    <div class="site-header__controls site-header__section">
+        <div class="js-menu-toggle" role="button" tabindex="0">
+            <div class="hamburger-menu">
+                <div class="hamburger-menu__icon">
+                    <div class="lamp js-hamburger-lamp"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="17">
+                        <path d="M0 14.19h24V17H0v-2.81zM0 0h24v2.81H0V0zm0 7.1h24v2.81H0V7.1z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <button type="button" tabindex="0" class="site-header__search-icon js-search-open" aria-label="Search"></button>
+    </div>
+    <div class="site-header__logo site-header__section">
+        <a href="http://tradesy.com" class="tradesy-logo" aria-label="Tradesy">
+            <img src="https://www.tradesy.com/images/tdc_base/branding/tradesy-white.svg" alt="Tradesy - Logo">
+        </a>
+    </div>
+    <div class="site-header__user-nav site-header__section">
+        <div class="user-nav user-nav--logged-out js-user-nav">
+            <div class="user-nav__item user-nav__auth">
+                <div>
+                    <a class="user-nav__log-in js-header-login" href="http://tradesy.com/signup/?type=login">Log In</a>
+                    <span>or</span>
+                    <a class="user-nav__sign-up js-header-signup" href="http://tradesy.com/signup">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 
 
-<form action="/task" method="post">
-    <p><input type="text" name="content"></p>
-    <input type="submit" value="Add task">
-</form>
+<main>
+    <section class="container">
+        <h1 class="tdc-hs1 tdc-text-center">TAP Module 3</h1>
+        <form action="/task" method="post" class="row center-xs tap-form">
+            <fieldset class="col-xs-4">
+                <input type="text" name="content">
+            </fieldset>
+            <fieldset class="col-xs-2">
+                <button type="submit" class="btn btn-primary btn-block">+ Add</button>
+            </fieldset>
+        </form>
+
+        <ol id="tap-list" class="row">
+            {% for task in tasks %}
+            <li class="col-xs-6 col-xs-offset-3{% if task.done %} task-complete{% endif %}">
+                <span class="task-content">{{ task.content }}</span>
+                <a href="/delete/{{ task.id }}" class="task-action" aria-label="Remove Task"><i class="ti ti-ut-close ti-xs" aria-hidden="true"></i></a>
+                {% if not task.done %} <a href="/done/{{ task.id }}" class="task-action" aria-label="Mark Task Complete"><i class="ti ti-ut-checkmark ti-xs" aria-hidden="true"></i></a>{% endif %}
+            </li>
+            {% endfor %}
+        </ol>
+    </section>
+</main>
+
+
+<footer>
+    <input type="hidden" name="tradesy_synchronizer" value="89a75121207e09fc16c02d4a3010aa26420543f24c" />
+    <div class="footer-wrapper container">
+        <nav class="row">
+            <ul class="col-xs-12 col-sm-3 col-md-3">
+                <li>
+                    <span class="footer-title">Help &amp; Support</span>
+                    <ul class="first">
+                        <li>
+                            <a href="/help/">Help Center
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/tradesy-trust/">Authenticity Promise
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/returns/">Returns
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/help/article/360045953713/package-safety-during-covid19/">COVID-19 Updates
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span class="footer-title">Sell on Tradesy</span>
+                    <ul class="last">
+                        <li>
+                            <a href="/how-it-works/">How Selling Works
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/help/category/202714947/selling/">Selling FAQ
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/sell-landing/">Start Selling
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/business/">Tradesy for Business
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+                <span class="footer-title">Buy on Tradesy</span>
+                <li>
+                    <a href="/womens-clothing/">Clothing
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/bags/">Bags
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/womens-shoes/">Shoes
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/womens-accessories/">Accessories
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/weddings/">Weddings
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/gift-card/">Gift Cards
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/help/category/202691538/buying/">Buying FAQ
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+            </ul>
+            <ul class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+                <span class="footer-title">Top Designers</span>
+                <li>
+                    <a href="/louis-vuitton/">Louis Vuitton
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/chanel/">Chanel
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/celine/">Céline
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/gucci/">Gucci
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/saint-laurent/">Saint Laurent
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/prada/">Prada
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/christian-louboutin/">Christian Louboutin
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/designers/">Designer Index
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+            </ul>
+            <ul class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+                <span class="footer-title">Company</span>
+                <li>
+                    <a href="/about/">About Us
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/press/">Press
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/reviews/">Reviews
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/mobile-app/">Apps
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/blog/">Blog
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="/about/#careers"id="footer-hiring-link">Jobs at Tradesy
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18" height="32" viewBox="5.9925 -2.5 18.0125 30" enable-background="new 5.9925 -2.5 18.0125 30" xml:space="preserve"><g><g><polygon class="chevron-right" fill="#111111" points="5.9925,24.4875 9.0075,27.5 24.0075,12.5 9.0075,-2.5 5.9925,0.5125 17.915,12.5"/></g></g></svg>
+                    </a>
+                </li>
+            </ul>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 apps-desktop">
+                <div id="footer-mobile-apps-desktop">
+
+                    <span class="footer-title">iOS &amp; Android</span>
+
+                    <a href="https://control.kochava.com/v1/cpi/click?campaign_id=kotradesy53b4344a7d182e5c0e509e7b38&network_id=2929&device_id=device_id&site_id=1&tref=iosAppFooter" target="_blank"><img alt="Shop and Sellon iOS" width=600 height=206 data-width=600 data-height=206 data-src="https://images.tradesy.com/images/badges/app-store-footer.png" class="lazyload" src="https://images.tradesy.com/images/badges/app-store-footer.png" /><noscript><img src="https://images.tradesy.com/images/badges/app-store-footer.png" alt="Shop and Sellon iOS" width=600 height=206 /></noscript><span class="footer-app-title"><strong>Shop and Sell</strong><br />on iOS</span></a><a href="https://control.kochava.com/v1/cpi/click?campaign_id=kotradesy-android565de8f9cca25ee23ec88b1530&network_id=3255&device_id=device_id&site_id=1&append_app_conv_trk_params=1&tref=androidAppFooter" target="_blank"><img alt="Shop and Sellon Android" width=600 height=206 data-width=600 data-height=206 data-src="https://images.tradesy.com/images/badges/google-play-footer.png" class="lazyload" src="https://images.tradesy.com/images/badges/google-play-footer.png" /><noscript><img src="https://images.tradesy.com/images/badges/google-play-footer.png" alt="Shop and Sellon Android" width=600 height=206 /></noscript><span class="footer-app-title"><strong>Shop and Sell</strong><br />on Android</span></a>
+                </div>
+            </div>
+        </nav>
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 apps-tablet">
+            <div id="footer-mobile-apps-tablet">
+
+                <span class="footer-title">iOS &amp; Android</span>
+
+                <a href="https://control.kochava.com/v1/cpi/click?campaign_id=kotradesy53b4344a7d182e5c0e509e7b38&network_id=2929&device_id=device_id&site_id=1&tref=iosAppFooter" target="_blank"><img alt="Shop and Sellon iOS" width=600 height=206 data-width=600 data-height=206 data-src="https://images.tradesy.com/images/badges/app-store-footer.png" class="lazyload" src="https://images.tradesy.com/images/badges/app-store-footer.png" /><noscript><img src="https://images.tradesy.com/images/badges/app-store-footer.png" alt="Shop and Sellon iOS" width=600 height=206 /></noscript><span class="footer-app-title"><strong>Shop and Sell</strong><br />on iOS</span></a><a href="https://control.kochava.com/v1/cpi/click?campaign_id=kotradesy-android565de8f9cca25ee23ec88b1530&network_id=3255&device_id=device_id&site_id=1&append_app_conv_trk_params=1&tref=androidAppFooter" target="_blank"><img alt="Shop and Sellon Android" width=600 height=206 data-width=600 data-height=206 data-src="https://images.tradesy.com/images/badges/google-play-footer.png" class="lazyload" src="https://images.tradesy.com/images/badges/google-play-footer.png" /><noscript><img src="https://images.tradesy.com/images/badges/google-play-footer.png" alt="Shop and Sellon Android" width=600 height=206 /></noscript><span class="footer-app-title"><strong>Shop and Sell</strong><br />on Android</span></a>
+            </div>
+
+        </div>        <div id="footer-social-links-copyright" class="row">
+        <div class="col-xs-12 col-sm-12 col-md-3 footer-social">
+            <a href="https://www.facebook.com/gotradesy" target="_blank"><i class="icon-facebook"></i><em>Facebook</em></a><a href="https://twitter.com/tradesy" target="_blank"><i class="icon-twitter"></i><em>Twitter</em></a><a href="http://instagram.com/tradesy" target="_blank"><i class="icon-instagram"></i><em>Instagram</em></a><a href="https://www.pinterest.com/tradesy/" target="_blank"><i class="icon-pinterest"></i><em>Pinterest</em></a>            </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 footer-copyright">
+            <p>
+                &copy; 2020 Tradesy, Inc.
+                <br/>
+                All rights reserved, TRADESY&reg; is a registered trademark of Tradesy Inc.
+            </p>
+            <p>
+                <a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms</a>
+            </p>
+        </div>
+    </div>
+    </div>
+</footer>
+</body>
+</html>
