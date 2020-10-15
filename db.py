@@ -111,6 +111,15 @@ class TaskDatabase:
         self.execute(cursor, sql)
         return self.make_result(columns, cursor.fetchall())
 
+    def get_undone_tasks(self):
+        """ Retrieve all tasks from the database """
+        columns = ('id', 'created_date', 'content', 'done', 'completed_date')
+        sql = f"SELECT {', '.join(columns)} FROM tasks WHERE done = 0 ORDER BY id;"
+
+        cursor = self.get_cursor()
+        self.execute(cursor, sql)
+        return self.make_result(columns, cursor.fetchall())
+
     def make_result(self, columns, rows):
         """ Helper function to convert lists of (list) results into a list of dicts """
         records = []
