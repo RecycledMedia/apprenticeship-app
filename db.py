@@ -17,6 +17,7 @@ class TaskDatabase:
     def close_connection(self):
         """ Close the connection to the database """
         if self.connection:
+            self.get_connection().commit()
             self.connection.close()
         self.connection = None
 
