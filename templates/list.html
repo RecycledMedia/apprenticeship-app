@@ -22,6 +22,12 @@
             </fieldset>
         </form>
 
+        {% if hide_done %}
+            <a href="/">Show all</a>
+        {% else %}
+            <a href="/hide_done">Hide done</a>
+        {% endif %}
+
         <ol id="tap-list" class="row">
             {% for task in tasks %}
             <li class="col-xs-6 col-xs-offset-3{% if task.done %} task-complete{% endif %}">

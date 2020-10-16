@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request
+from flask import Flask, make_response, request
 from flask import render_template
 from flask import redirect
 
@@ -19,7 +19,13 @@ db.create_database()
 @app.route('/')
 def tasks_list():
     tasks = db.get_tasks()
-    return render_template('list.html', tasks=tasks)
+    return render_template('list.html', tasks=tasks, hide_done=False)
+
+
+@app.route('/hide_done')
+def undone_tasks_list():
+    tasks = db.get_undone_tasks()
+    return render_template('list.html', tasks=tasks, hide_done=True)
 
 
 @app.route('/task', methods=['POST'])
