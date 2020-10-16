@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, make_response, request
+from flask import Flask, request
 from flask import render_template
 from flask import redirect
 
@@ -18,14 +18,21 @@ db.create_database()
 
 @app.route('/')
 def tasks_list():
-    tasks = db.get_tasks()
-    return render_template('list.html', tasks=tasks, hide_done=False)
+    hide_done = int(request.cookies.get('hide_done', 0))
+
+    if hide_done:
+        tasks = db.get_undone_tasks()
+    else:
+        tasks = db.get_tasks()
+
+    return render_template('list.html', tasks=tasks, hide_done=hide_done)
 
 
-@app.route('/hide_done')
-def undone_tasks_list():
-    tasks = db.get_undone_tasks()
-    return render_template('list.html', tasks=tasks, hide_done=True)
+@app.route('/hide_done/<int:hide_done>')
+def filter_tasks(hide_done):
+    resp = redirect('/')
+    resp.set_cookie('hide_done', str(hide_done))
+    return resp
 
 
 @app.route('/task', methods=['POST'])
