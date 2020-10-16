@@ -81,6 +81,7 @@ class TaskDatabase:
         return self.execute(None, sql, (content, task_id))
 
     def set_task_done(self, task_id, done=True):
+        """ Update the task to done or undone """
         if done:
             sql = "UPDATE tasks SET done = TRUE, completed_date = datetime('now') WHERE id = ?;"
         else:
