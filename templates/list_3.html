@@ -3,16 +3,17 @@
 {% block title %}Module 3{% endblock %}
 
 {% block styles %}
-    {{ super() }}
     {# comment
+    {{ super() }}
     <link rel="stylesheet" href="../static/css/base.css">
     #}
 {% endblock %}
 
+{% block header %}{% endblock %}
 
 {% block content %}
     <h1 class="tdc-hs1 tdc-text-center">TAP Module 3</h1>
-    <form action="/task" method="post" class="row center-xs tap-form">
+    <form id="tap-form" action="/task" method="post" class="row center-xs">
         <fieldset class="col-xs-4">
             <input type="text" name="content">
         </fieldset>
@@ -31,3 +32,5 @@
         {% endfor %}
     </ol>
 {% endblock %}
+
+{% block footer %}{% endblock %}
