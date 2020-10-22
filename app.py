@@ -16,10 +16,31 @@ db = TaskDatabase(DB_FILE)
 db.create_database()
 
 
+def redirect_to_form():
+    ref = request.headers.get('Referer')
+    if not ref:
+        ref = '/'
+    return redirect(ref)
+
 @app.route('/')
 def tasks_list():
     tasks = db.get_tasks()
     return render_template('list.html', tasks=tasks)
+
+@app.route('/1')
+def tasks_list_1():
+    tasks = db.get_tasks()
+    return render_template('list_1.html', tasks=tasks)
+
+@app.route('/2')
+def tasks_list_2():
+    tasks = db.get_tasks()
+    return render_template('list_2.html', tasks=tasks)
+
+@app.route('/3')
+def tasks_list_3():
+    tasks = db.get_tasks()
+    return render_template('list_3.html', tasks=tasks)
 
 
 @app.route('/task', methods=['POST'])
@@ -29,7 +50,7 @@ def add_task():
         return 'Error'
 
     db.add_task(content)
-    return redirect('/')
+    return redirect_to_form()
 
 
 @app.route('/delete/<int:task_id>')
@@ -39,13 +60,13 @@ def delete_task(task_id):
         return redirect('/')
 
     db.delete_task(task_id)
-    return redirect('/')
+    return redirect_to_form()
 
 
 @app.route('/done/<int:task_id>')
 def resolve_task(task_id):
     db.set_task_done(task_id)
-    return redirect('/')
+    return redirect_to_form()
 
 
 if __name__ == '__main__':
