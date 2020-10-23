@@ -21,6 +21,15 @@
             <button type="submit" class="btn btn-primary btn-block">+ Add</button>
         </fieldset>
     </form>
+    <div id="form-toggle-container" class="row">
+        <div class="col-xs-6 col-xs-offset-3">
+            {% if hide_done %}
+            <a href="/hide_done/0" class="show-hide-toggle">Show all</a>
+            {% else %}
+            <a href="/hide_done/1" class="show-hide-toggle">Hide done</a>
+            {% endif %}
+        </div>
+    </div>
     <ol id="tap-list" class="row">
         {% for task in tasks %}
         <li class="col-xs-6 col-xs-offset-3{% if task.done %} task-complete{% endif %}">
