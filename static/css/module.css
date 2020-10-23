@@ -1,4 +1,3 @@
-/*
 main {
     min-height: 600px;
     padding: 70px 20px;
@@ -8,11 +7,14 @@ main {
     margin-top: 25px;
 }
 
+#form-toggle-container {
+    margin-top: 50px;
+}
 #tap-list {
     margin-top: 25px;
 }
 
-#tap-list li{
+#tap-list li {
     padding: 10px;
 }
 
@@ -20,7 +22,8 @@ main {
     background: #f1f1f1;
 }
 
-#tap-list li .task-action {
+#tap-list .task-action {
+    font-size: 0;
     float: right;
     margin-left: 10px;
 }
@@ -34,4 +37,3 @@ main {
     height: 16px;
     min-width: 16px;
 }
-*/

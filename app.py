@@ -24,23 +24,43 @@ def redirect_to_form():
 
 @app.route('/')
 def tasks_list():
-    tasks = db.get_tasks()
-    return render_template('list.html', tasks=tasks)
+    hide_done = int(request.cookies.get('hide_done', 0))
+
+    if hide_done:
+        tasks = db.get_undone_tasks()
+    else:
+        tasks = db.get_tasks()
+    return render_template('list.html', tasks=tasks, hide_done=hide_done)
 
 @app.route('/1')
 def tasks_list_1():
-    tasks = db.get_tasks()
-    return render_template('list_1.html', tasks=tasks)
+    hide_done = int(request.cookies.get('hide_done', 0))
+
+    if hide_done:
+        tasks = db.get_undone_tasks()
+    else:
+        tasks = db.get_tasks()
+    return render_template('list_1.html', tasks=tasks, hide_done=hide_done)
 
 @app.route('/2')
 def tasks_list_2():
-    tasks = db.get_tasks()
-    return render_template('list_2.html', tasks=tasks)
+    hide_done = int(request.cookies.get('hide_done', 0))
+
+    if hide_done:
+        tasks = db.get_undone_tasks()
+    else:
+        tasks = db.get_tasks()
+    return render_template('list_2.html', tasks=tasks, hide_done=hide_done)
 
 @app.route('/3')
 def tasks_list_3():
-    tasks = db.get_tasks()
-    return render_template('list_3.html', tasks=tasks)
+    hide_done = int(request.cookies.get('hide_done', 0))
+
+    if hide_done:
+        tasks = db.get_undone_tasks()
+    else:
+        tasks = db.get_tasks()
+    return render_template('list_3.html', tasks=tasks, hide_done=hide_done)
 
 
 @app.route('/task', methods=['POST'])
@@ -52,6 +72,11 @@ def add_task():
     db.add_task(content)
     return redirect_to_form()
 
+@app.route('/hide_done/<int:hide_done>')
+def filter_tasks(hide_done):
+    resp = redirect_to_form()
+    resp.set_cookie('hide_done', str(hide_done))
+    return resp
 
 @app.route('/delete/<int:task_id>')
 def delete_task(task_id):

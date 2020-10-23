@@ -5,7 +5,7 @@
 {% block styles %}
     {# comment
     {{ super() }}
-    <link rel="stylesheet" href="../static/css/base.css">
+    <link rel="stylesheet" href="../static/css/module_3.css">
     #}
 {% endblock %}
 
@@ -21,13 +21,12 @@
             <button type="submit" class="btn btn-primary btn-block">+ Add</button>
         </fieldset>
     </form>
-
     <ol id="tap-list" class="row">
         {% for task in tasks %}
         <li class="col-xs-6 col-xs-offset-3{% if task.done %} task-complete{% endif %}">
             <span class="task-content">{{ task.content }}</span>
-            <a href="/delete/{{ task.id }}" class="task-action" aria-label="Remove Task"><i class="ti ti-ut-close ti-xs" aria-hidden="true"></i></a>
-            {% if not task.done %} <a href="/done/{{ task.id }}" class="task-action" aria-label="Mark Task Complete"><i class="ti ti-ut-checkmark ti-xs" aria-hidden="true"></i></a>{% endif %}
+            <a href="/delete/{{ task.id }}" class="task-action" aria-label="Remove Task"><i class="ti ti-ut-close ti-xs" aria-hidden="true"></i>Remove</a>
+            {% if not task.done %} <a href="/done/{{ task.id }}" class="task-action" aria-label="Mark Task Complete"><i class="ti ti-ut-checkmark ti-xs" aria-hidden="true"></i>Done</a>{% endif %}
         </li>
         {% endfor %}
     </ol>

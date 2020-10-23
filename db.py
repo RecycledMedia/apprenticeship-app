@@ -17,6 +17,7 @@ class TaskDatabase:
     def close_connection(self):
         """ Close the connection to the database """
         if self.connection:
+            self.get_connection().commit()
             self.connection.close()
         self.connection = None
 
@@ -65,7 +66,7 @@ class TaskDatabase:
         """ Add a task """
         # WARNING: This is bad and can lead to SQL Injection attacks!
         sql = f"""
-          INSERT INTO tasks (created_date, content) 
+          INSERT INTO tasks (created_date, content)
           VALUES (datetime('now'), '{content.replace("'", "''")}');
         """
 
@@ -80,6 +81,7 @@ class TaskDatabase:
         return self.execute(None, sql, (content, task_id))
 
     def set_task_done(self, task_id, done=True):
+        """ Update the task to done or undone """
         if done:
             sql = "UPDATE tasks SET done = TRUE, completed_date = datetime('now') WHERE id = ?;"
         else:
@@ -106,6 +108,15 @@ class TaskDatabase:
         """ Retrieve all tasks from the database """
         columns = ('id', 'created_date', 'content', 'done', 'completed_date')
         sql = f"SELECT {', '.join(columns)} FROM tasks ORDER BY id;"
+
+        cursor = self.get_cursor()
+        self.execute(cursor, sql)
+        return self.make_result(columns, cursor.fetchall())
+
+    def get_undone_tasks(self):
+        """ Retrieve all tasks from the database """
+        columns = ('id', 'created_date', 'content', 'done', 'completed_date')
+        sql = f"SELECT {', '.join(columns)} FROM tasks WHERE done = 0 ORDER BY id;"
 
         cursor = self.get_cursor()
         self.execute(cursor, sql)
