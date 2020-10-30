@@ -72,6 +72,15 @@ def tasks_list_4():
         tasks = db.get_tasks()
     return render_template('list_4.html', tasks=tasks, hide_done=hide_done)
 
+@app.route('/5')
+def tasks_list_5():
+    hide_done = int(request.cookies.get('hide_done', 0))
+
+    if hide_done:
+        tasks = db.get_undone_tasks()
+    else:
+        tasks = db.get_tasks()
+    return render_template('list_5.html', tasks=tasks, hide_done=hide_done)
 
 @app.route('/task', methods=['POST'])
 def add_task():
