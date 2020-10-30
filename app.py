@@ -65,12 +65,13 @@ def tasks_list_3():
 @app.route('/4')
 def tasks_list_4():
     hide_done = int(request.cookies.get('hide_done', 0))
-
+    show_recent = int(request.cookies.get('show_recent', 0))
+    # TODO implement the "Show recent" toggle to only show tasks that were created in the last 5 minutes
     if hide_done:
         tasks = db.get_undone_tasks()
     else:
         tasks = db.get_tasks()
-    return render_template('list_4.html', tasks=tasks, hide_done=hide_done)
+    return render_template('list_4.html', tasks=tasks, hide_done=hide_done, show_recent=show_recent)
 
 @app.route('/5')
 def tasks_list_5():
@@ -97,6 +98,12 @@ def filter_tasks(hide_done):
     resp.set_cookie('hide_done', str(hide_done))
     return resp
 
+@app.route('/show_recent/<int:show_recent>')
+def filter_tasks_by_recency(show_recent):
+    resp = redirect_to_form()
+    resp.set_cookie('show_recent', str(show_recent))
+    return resp
+
 @app.route('/delete/<int:task_id>')
 def delete_task(task_id):
     task = db.get_task(task_id)
@@ -110,6 +117,22 @@ def delete_task(task_id):
 @app.route('/done/<int:task_id>')
 def resolve_task(task_id):
     db.set_task_done(task_id)
+    return redirect_to_form()
+
+
+@app.route('/redo/<int:task_id>')
+def redo_task(task_id):
+    # TODO
+    return redirect_to_form()
+
+@app.route('/mark_all_done')
+def complete_all_tasks():
+    # TODO
+    return redirect_to_form()
+
+@app.route('/redo_all')
+def redo_all_tasks():
+    # TODO
     return redirect_to_form()
 
 
