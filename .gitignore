@@ -3,3 +3,4 @@ tasks.sqlite
 
 __pycache__/
 *.py[cod]
+node_modules

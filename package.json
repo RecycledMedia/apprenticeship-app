@@ -1,0 +1,25 @@
+{
+  "name": "apprenticeship-app",
+  "version": "1.0.0",
+  "description": "app.py",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RecycledMedia/apprenticeship-app.git"
+  },
+  "author": "Tradesy QA",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RecycledMedia/apprenticeship-app/issues"
+  },
+  "homepage": "https://github.com/RecycledMedia/apprenticeship-app#readme",
+  "devDependencies": {
+    "cypress": "^5.5.0"
+  }
+}
