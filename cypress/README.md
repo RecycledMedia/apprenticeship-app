@@ -6,14 +6,19 @@ Automation! For when you want to make sure no random thing got broken by a new f
 
 ## How to get this going
 
+### Step 1
+Install Node.js (see above)
+
+### Step 2
 In your terminal, from the root directory (a directory above this one), run the following:
 ```
 npm install
 ```
 (Note: npm will only exist if you've successfully installed node.js)
-## s
 
-Wait for install to complete, then...
+
+### Step 3
+Run your test!
 
 To run a quick, headless (read: browser window not visible) run, use the following command:
 ```
