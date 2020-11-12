@@ -3,6 +3,10 @@ main {
     padding: 70px 20px;
 }
 
+li {
+    display: none;
+}
+
 #tap-form {
     margin-top: 25px;
 }
@@ -26,6 +30,7 @@ main {
 
 #tap-list li .task-action {
     float: right;
+    font-size: 0;
     margin-left: 10px;
 }
 
@@ -37,4 +42,16 @@ main {
 .ti.ti-xs {
     height: 16px;
     min-width: 16px;
+}
+
+.show-complete i {
+    top: 4px;
+    transform: rotate(90deg);
+    position: relative;
+}
+
+.hide-complete i {
+    top: 3px;
+    transform: rotate(-90deg);
+    position: relative;
 }

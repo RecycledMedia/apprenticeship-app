@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Module 5{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="../static/css/module_5.css">
+{% endblock %}
+
+{% block content %}
+<h1 class="tdc-hs1 tdc-text-center">TAP Module 5</h1>
+<form id="tap-form" action="/task" method="post" class="row center-xs">
+    <fieldset class="col-xs-4">
+        <input type="text" name="content">
+    </fieldset>
+    <fieldset class="col-xs-2">
+        <button type="submit" class="btn btn-primary btn-block">+ Add</button>
+    </fieldset>
+</form>
+<div id="form-toggle-container" class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+        {% if hide_done %}
+        <a href="/hide_done/0" class="show-hide-toggle show-complete">Show completed items <i class="ti ti-ut-arrow-right ti-xs" aria-hidden="true"></i></a>
+        {% else %}
+        <a href="/hide_done/1" class="show-hide-toggle hide-complete">Hide completed items <i class="ti ti-ut-arrow-right ti-xs" aria-hidden="true"></i></a>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+        {% if tasks|length > 0 %}<h2 class="tdc-hs3">{{ tasks|length }} Item{% if tasks|length > 1 %}'s{% endif %} in list</h2>{% endif %}
+    </div>
+</div>
+<ol id="tap-list" class="row">
+    {% for task in tasks %}
+    <li class="col-xs-6 col-xs-offset-3{% if task.done %} task-complete{% endif %}">
+        <span class="task-content">{{ task.content }}</span>
+        <a href="/delete/{{ task.id }}" class="task-action" aria-label="Remove Task"><i class="ti ti-ut-close ti-xs" aria-hidden="true"></i>Remove</a>
+        {% if not task.done %} <a href="/done/{{ task.id }}" class="task-action" aria-label="Mark Task Complete"><i class="ti ti-ut-checkmark ti-xs" aria-hidden="true"></i>Done</a>{% endif %}
+    </li>
+    {% endfor %}
+</ol>
+{% endblock %}
+

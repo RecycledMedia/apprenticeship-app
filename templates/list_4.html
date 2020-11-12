@@ -7,38 +7,55 @@
     <link rel="stylesheet" href="../static/css/module_4.css">
 {% endblock %}
 
+{% block header %}{% endblock %}
+
 {% block content %}
-<h1 class="tdc-hs1 tdc-text-center">TAP Module 4</h1>
-<form id="tap-form" action="/task" method="post" class="row center-xs">
-    <fieldset class="col-xs-4">
-        <input type="text" name="content">
-    </fieldset>
-    <fieldset class="col-xs-2">
-        <button type="submit" class="btn btn-primary btn-block">+ Add</button>
-    </fieldset>
-</form>
-<div id="form-toggle-container" class="row">
-    <div class="col-xs-6 col-xs-offset-3">
-        {% if hide_done %}
-        <a href="/hide_done/0" class="show-hide-toggle">Show all</a>
-        {% else %}
-        <a href="/hide_done/1" class="show-hide-toggle">Hide done</a>
-        {% endif %}
+    <h1 class="tdc-hs1 tdc-text-center">TAP Module 4</h1>
+    <form id="tap-form" action="/task" method="post" class="row center-xs">
+        <fieldset class="col-xs-4">
+            <input type="text" name="content">
+        </fieldset>
+        <fieldset class="col-xs-2">
+            <button type="submit" class="btn btn-primary btn-block">+ Add</button>
+        </fieldset>
+    </form>
+    <div id="form-toggle-container" class="row">
+        <div class="col-xs-1 col-xs-offset-3">
+            {% if hide_done %}
+            <a href="/hide_done/0" class="show-hide-toggle">Show all</a>
+            {% else %}
+            <a href="/hide_done/1" class="show-hide-toggle">Hide done</a>
+            {% endif %}
+        </div>
+        <div class="col-xs-1">
+            <a href="/mark_all_done" class="show-hide-toggle">Mark all done</a>
+        </div>
+        <div class="col-xs-1">
+            <a href="/redo_all" class="show-hide-toggle">Redo all</a>
+        </div>
+        <div class="col-xs-1">
+            {% if show_recent %}
+            <a href="/show_recent/0" class="show-hide-toggle">Show all</a>
+            {% else %}
+            <a href="/show_recent/1" class="show-hide-toggle">Show recent</a>
+            {% endif %}
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-xs-6 col-xs-offset-3">
-        {% if tasks|length > 0 %}<h2 class="tdc-hs3">{{ tasks|length }} Item{% if tasks|length > 1 %}'s{% endif %} in list</h2>{% endif %}
-    </div>
-</div>
-<ol id="tap-list" class="row">
-    {% for task in tasks %}
-    <li class="col-xs-6 col-xs-offset-3{% if task.done %} task-complete{% endif %}">
-        <span class="task-content">{{ task.content }}</span>
-        <a href="/delete/{{ task.id }}" class="task-action" aria-label="Remove Task"><i class="ti ti-ut-close ti-xs" aria-hidden="true"></i>Remove</a>
-        {% if not task.done %} <a href="/done/{{ task.id }}" class="task-action" aria-label="Mark Task Complete"><i class="ti ti-ut-checkmark ti-xs" aria-hidden="true"></i>Done</a>{% endif %}
-    </li>
-    {% endfor %}
-</ol>
+    <ol id="tap-list" class="row">
+        {% for task in tasks %}
+        <li class="col-xs-10 col-xs-offset-1{% if task.done %} task-complete{% endif %}">
+            {{ task.created_date }}
+            <span class="task-content" style="padding-left: 10px">{{ task.content }}</span>
+            <a href="/delete/{{ task.id }}" class="task-action" aria-label="Remove Task"><i class="ti ti-ut-close ti-xs" aria-hidden="true"></i>Remove</a>
+            {% if not task.done %}
+                <a href="/done/{{ task.id }}" class="task-action" aria-label="Mark Task Complete"><i class="ti ti-ut-checkmark ti-xs" aria-hidden="true"></i>Done</a>
+            {% else %}
+                <a href="/redo/{{ task.id }}" class="task-action" aria-label="Redo Task"><i class="ti ti-ut-refresh ti-xs" aria-hidden="true"></i>Redo</a>
+                <span class="task-action"><i class="ti ti-ut-calendar ti-xs" aria-hidden="true"></i>{{ task.completed_date }}</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ol>
 {% endblock %}
 
+{% block footer %}{% endblock %}
