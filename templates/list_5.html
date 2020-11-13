@@ -31,7 +31,7 @@
         {% if tasks|length > 0 %}<h2 class="tdc-hs3">{{ tasks|length }} Item{% if tasks|length > 1 %}'s{% endif %} in list</h2>{% endif %}
     </div>
 </div>
-<ol id="tap-list" class="row">
+<ol id="tap-list" class="row" style="display:none;">
     {% for task in tasks %}
     <li class="col-xs-6 col-xs-offset-3{% if task.done %} task-complete{% endif %}">
         <span class="task-content">{{ task.content }}</span>
